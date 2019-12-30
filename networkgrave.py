@@ -24,10 +24,7 @@ channels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 from scapy.all import *
 import subprocess
 
-import random
 import time
-
-from threading import Thread
        
 #-----------------------------------------------------------------------------------------------------    
 
