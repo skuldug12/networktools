@@ -22,4 +22,4 @@ Improve networkgrave functionality and capability.
 Add more documentation (?)
 
 # thats pretty much it
-_WHEN THERE IS NOTHING THAT FIT YOUR NEEDS, GET YOUR OWN HANDS DIRTY_
+_WHEN THERE IS NOTHING THAT FITS YOUR NEEDS, GET YOUR OWN HANDS DIRTY_
