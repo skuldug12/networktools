@@ -15,7 +15,7 @@ ADDITIONAL NOTE: when channel hopping on the deauthentication attack, iwconfig o
 [airmon-ng] (aircrack-ng package) for monitor mode
 
 # to do
-Separate functions from networkgrave program into separate programs to create modules that will be used for local imports (will help with portability, future projects and readability, debugging etc.).
+~Separate functions from networkgrave program into separate programs to create modules that will be used for local imports (will help with portability, future projects and readability, debugging etc.).~ -- DONE
 
 Fix the text coloring, layout maybe as well
 
