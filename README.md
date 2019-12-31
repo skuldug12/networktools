@@ -7,6 +7,8 @@ A series of Python3 programs that can be used to test networks.
 A tool that scans for wifi networks in the area, then sends forged deauthentication packets to each scanned network. Very effective method of jamming an entire area.
 
 NOTE: I have written the program to pretty much only fit my need, so I've set the interface to mon0. If your monmode interface is wlan0mon or whatever, change it in the code. I will write a prompt in the program later.
+
+ADDITIONAL NOTE: when channel hopping on the deauthentication attack, iwconfig often responds with input output errors. This can lead to stutters and people being reconnected for a second, but will disconnect them immediately after. I will try to fix these errors to make a consistent flow with no stutters.
 # dependencies
 [python3-scapy] for packet creation and sending
 
