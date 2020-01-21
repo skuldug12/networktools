@@ -1,3 +1,6 @@
+# serious note
+The programs are undergoing heavy maintenance, nothing works right now so don't clone -- 21/1/2020
+
 DISCLAIMER: I am not responsible for any potential malicious use involved with my programs. These programs have been uploaded for educational purposes and are intended to be used in a safe, controlled environment and not with destructive intent.
 
 # networktools
