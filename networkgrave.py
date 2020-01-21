@@ -1,8 +1,8 @@
 import os
 #local imports
-from src import wificardtools as wificard
-from src import features as f
-from src import menus
+from src/ng import wificardtools as wificard
+from src/ng import features as f
+from src/ng import menus
 
 #colors
 red = "\033[31m"
