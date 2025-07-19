@@ -1,8 +1,8 @@
 import os
 from threading import Thread
 #local imports
-from src/nj import wificardtools as wificard
-from src/nj import features as f
+from src.nj import wificardtools as wificard
+from src.nj import features as f
 
 #colors
 red = "\033[31m"
