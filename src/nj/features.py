@@ -3,7 +3,7 @@ import time
 
 from scapy.all import *
 from threading import Thread
-from srcnj import wificardtools as wificard
+from . import wificardtools as wificard
 
 #ap array
 AP_BSSID = []

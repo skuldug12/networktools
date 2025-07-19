@@ -1,7 +1,7 @@
 import subprocess
 from scapy.all import *
 from threading import Thread
-import wificardtools as wificard
+from . import wificardtools as wificard
 
 #colors
 red = "\033[31m"
